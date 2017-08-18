@@ -1,0 +1,4 @@
+Sitemap: http://joshuahernandezblog.com/sitemapindex.xml
+
+User-Agent: *
+Host: joshuahernandezblog.com
