@@ -7,30 +7,22 @@
                         http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
  <url>
   <loc>http://joshuahernandezblog.com/</loc>
-  <lastmod>2017-08-18T10:42:00Z</lastmod>
+  <lastmod>2017-08-19T16:07:00Z</lastmod>
  </url>
  <url>
   <loc>http://joshuahernandezblog.com/2017/</loc>
-  <lastmod>2017-08-18T10:42:00Z</lastmod>
+  <lastmod>2017-08-19T16:07:00Z</lastmod>
  </url>
  <url>
   <loc>http://joshuahernandezblog.com/archive.html</loc>
-  <lastmod>2017-08-18T10:42:00Z</lastmod>
+  <lastmod>2017-08-19T16:07:00Z</lastmod>
  </url>
  <url>
-  <loc>http://joshuahernandezblog.com/blog/web-scraping-with-r/</loc>
-  <lastmod>2017-08-18T10:42:00Z</lastmod>
+  <loc>http://joshuahernandezblog.com/blog/MovieProject/web-scraping-with-r/</loc>
+  <lastmod>2017-08-19T16:07:00Z</lastmod>
  </url>
  <url>
   <loc>http://joshuahernandezblog.com/categories/</loc>
-  <lastmod>2017-08-18T10:42:00Z</lastmod>
- </url>
- <url>
-  <loc>http://joshuahernandezblog.com/galleries/</loc>
-  <lastmod>2017-08-18T10:42:00Z</lastmod>
- </url>
- <url>
-  <loc>http://joshuahernandezblog.com/listings/</loc>
-  <lastmod>2017-08-18T10:42:00Z</lastmod>
+  <lastmod>2017-08-19T16:07:00Z</lastmod>
  </url>
 </urlset>

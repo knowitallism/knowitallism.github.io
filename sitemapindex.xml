@@ -6,15 +6,11 @@
     xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
                         http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
  <sitemap>
-  <loc>http://joshuahernandezblog.com/galleries/rss.xml</loc>
-  <lastmod>2017-08-18T10:42:00Z</lastmod>
- </sitemap>
- <sitemap>
   <loc>http://joshuahernandezblog.com/rss.xml</loc>
-  <lastmod>2017-08-18T10:42:00Z</lastmod>
+  <lastmod>2017-08-19T16:07:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>http://joshuahernandezblog.com/sitemap.xml</loc>
-  <lastmod>2017-08-18T10:42:00Z</lastmod>
+  <lastmod>2017-08-19T16:07:00Z</lastmod>
  </sitemap>
 </sitemapindex>
