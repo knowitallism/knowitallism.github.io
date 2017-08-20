@@ -138,8 +138,8 @@ NAVIGATION_LINKS = {
         ('/archive.html', 'Archives', 'icon-folder-open-alt'),
         ('/categories/index.html', 'Tags', 'icon-tags'),
         ('/rss.xml', 'RSS', 'icon-rss'),
-        ('https://getnikola.com', 'About me', 'icon-user'),
-        ('/about-me/index.html', 'My Github', 'icon-github'),
+        ('/about-me/index.html', 'About me', 'icon-user'),
+        ('', 'My Github', 'icon-github'),
     )
 }
 
