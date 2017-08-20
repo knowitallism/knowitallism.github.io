@@ -1,48 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<?xml-stylesheet type="text/xsl" href="assets/xml/rss.xsl" media="all"?><rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Joshua Hernandez's Blog</title><link>http://joshuahernandezblog.com/</link><description>This is a demo site for Nikola.</description><atom:link href="http://joshuahernandezblog.com/rss.xml" rel="self" type="application/rss+xml"></atom:link><language>en</language><copyright>Contents © 2017 &lt;a href="mailto:Joshua.M.S.Hernandez@gmail.com"&gt;Joshua Hernandez&lt;/a&gt; </copyright><lastBuildDate>Sat, 19 Aug 2017 16:07:42 GMT</lastBuildDate><generator>Nikola (getnikola.com)</generator><docs>http://blogs.law.harvard.edu/tech/rss</docs><item><title>Web Scraping with R</title><link>http://joshuahernandezblog.com/blog/MovieProject/web-scraping-with-r/</link><dc:creator>Joshua Hernandez</dc:creator><description>&lt;div tabindex="-1" id="notebook" class="border-box-sizing"&gt;
+<?xml-stylesheet type="text/xsl" href="assets/xml/rss.xsl" media="all"?><rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Joshua Hernandez's Blog</title><link>http://joshuahernandezblog.com/</link><description>This is a demo site for Nikola.</description><atom:link href="http://joshuahernandezblog.com/rss.xml" rel="self" type="application/rss+xml"></atom:link><language>en</language><copyright>Contents © 2017 &lt;a href="mailto:Joshua.M.S.Hernandez@gmail.com"&gt;Joshua Hernandez&lt;/a&gt; </copyright><lastBuildDate>Sun, 20 Aug 2017 15:16:18 GMT</lastBuildDate><generator>Nikola (getnikola.com)</generator><docs>http://blogs.law.harvard.edu/tech/rss</docs><item><title>Web Scraping with R</title><link>http://joshuahernandezblog.com/blog/MovieProject/web-scraping-with-r/</link><dc:creator>Joshua Hernandez</dc:creator><description>&lt;div tabindex="-1" id="notebook" class="border-box-sizing"&gt;
     &lt;div class="container" id="notebook-container"&gt;
 
-&lt;div class="cell border-box-sizing code_cell rendered"&gt;
-&lt;div class="input"&gt;
-&lt;div class="prompt input_prompt"&gt;In [8]:&lt;/div&gt;
-&lt;div class="inner_cell"&gt;
-    &lt;div class="input_area"&gt;
-&lt;div class=" highlight hl-r"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="c1"&gt;#Required Libraries.&lt;/span&gt;
-&lt;span class="kn"&gt;library&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;rvest&lt;span class="p"&gt;)&lt;/span&gt;
-&lt;span class="kn"&gt;library&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;httr&lt;span class="p"&gt;)&lt;/span&gt;
-&lt;span class="kn"&gt;library&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;ggplot2&lt;span class="p"&gt;)&lt;/span&gt;
-&lt;span class="kn"&gt;library&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;reshape2&lt;span class="p"&gt;)&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
-
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-
-&lt;/div&gt;
 &lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
 &lt;/div&gt;
 &lt;div class="inner_cell"&gt;
 &lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
-&lt;h2 id="Table-of-Contents"&gt;Table of Contents&lt;a class="anchor-link" href="http://joshuahernandezblog.com/blog/MovieProject/web-scraping-with-r/#Table-of-Contents"&gt;¶&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;&lt;/p&gt;&lt;p&gt;&lt;/p&gt;&lt;div class="lev1 toc-item"&gt;&lt;a href="http://joshuahernandezblog.com/blog/MovieProject/web-scraping-with-r/#The-Problem" data-toc-modified-id="The-Problem-1"&gt;&lt;span class="toc-item-num"&gt;1  &lt;/span&gt;The Problem&lt;/a&gt;&lt;/div&gt;&lt;div class="lev1 toc-item"&gt;&lt;a href="http://joshuahernandezblog.com/blog/MovieProject/web-scraping-with-r/#Getting-the-Data" data-toc-modified-id="Getting-the-Data-2"&gt;&lt;span class="toc-item-num"&gt;2  &lt;/span&gt;Getting the Data&lt;/a&gt;&lt;/div&gt;&lt;div class="lev2 toc-item"&gt;&lt;a href="http://joshuahernandezblog.com/blog/MovieProject/web-scraping-with-r/#Getting-Started" data-toc-modified-id="Getting-Started-21"&gt;&lt;span class="toc-item-num"&gt;2.1  &lt;/span&gt;Getting Started&lt;/a&gt;&lt;/div&gt;&lt;div class="lev2 toc-item"&gt;&lt;a href="http://joshuahernandezblog.com/blog/MovieProject/web-scraping-with-r/#Scraping-Our-First-Page" data-toc-modified-id="Scraping-Our-First-Page-22"&gt;&lt;span class="toc-item-num"&gt;2.2  &lt;/span&gt;Scraping Our First Page&lt;/a&gt;&lt;/div&gt;&lt;div class="lev2 toc-item"&gt;&lt;a href="http://joshuahernandezblog.com/blog/MovieProject/web-scraping-with-r/#Scraping-with-httr-and-Regular-Expressions" data-toc-modified-id="Scraping-with-httr-and-Regular-Expressions-23"&gt;&lt;span class="toc-item-num"&gt;2.3  &lt;/span&gt;Scraping with httr and Regular Expressions&lt;/a&gt;&lt;/div&gt;&lt;div class="lev2 toc-item"&gt;&lt;a href="http://joshuahernandezblog.com/blog/MovieProject/web-scraping-with-r/#Extracting-Movie-Info" data-toc-modified-id="Extracting-Movie-Info-24"&gt;&lt;span class="toc-item-num"&gt;2.4  &lt;/span&gt;Extracting Movie Info&lt;/a&gt;&lt;/div&gt;&lt;div class="lev1 toc-item"&gt;&lt;a href="http://joshuahernandezblog.com/blog/MovieProject/web-scraping-with-r/#Data-Cleaning-&amp;amp;-Exploration" data-toc-modified-id="Data-Cleaning-&amp;amp;-Exploration-3"&gt;&lt;span class="toc-item-num"&gt;3  &lt;/span&gt;Data Cleaning &amp;amp; Exploration&lt;/a&gt;&lt;/div&gt;&lt;div class="lev2 toc-item"&gt;&lt;a href="http://joshuahernandezblog.com/blog/MovieProject/web-scraping-with-r/#Preliminary-Questions" data-toc-modified-id="Preliminary-Questions-31"&gt;&lt;span class="toc-item-num"&gt;3.1  &lt;/span&gt;Preliminary Questions&lt;/a&gt;&lt;/div&gt;&lt;div class="lev2 toc-item"&gt;&lt;a href="http://joshuahernandezblog.com/blog/MovieProject/web-scraping-with-r/#Data-Cleaning" data-toc-modified-id="Data-Cleaning-32"&gt;&lt;span class="toc-item-num"&gt;3.2  &lt;/span&gt;Data Cleaning&lt;/a&gt;&lt;/div&gt;&lt;div class="lev2 toc-item"&gt;&lt;a href="http://joshuahernandezblog.com/blog/MovieProject/web-scraping-with-r/#Data-Exploration" data-toc-modified-id="Data-Exploration-33"&gt;&lt;span class="toc-item-num"&gt;3.3  &lt;/span&gt;Data Exploration&lt;/a&gt;&lt;/div&gt;
-
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
-&lt;/div&gt;
-&lt;div class="inner_cell"&gt;
-&lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
-&lt;h2 id="The-Problem"&gt;The Problem&lt;a class="anchor-link" href="http://joshuahernandezblog.com/blog/MovieProject/web-scraping-with-r/#The-Problem"&gt;¶&lt;/a&gt;&lt;/h2&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
-&lt;/div&gt;
-&lt;div class="inner_cell"&gt;
-&lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
-&lt;!--TEASER_START--&gt;
-&lt;p&gt; Recently there has been a string of movies where there is a strong mismatch between the critical reception and audience reception. For example, &lt;i&gt;Get Out&lt;/i&gt; recieved wide critical aclaim, with 99% of critical reviews being positive; however, only 88% of general audience reviews were positive. 88% is still a very good score, but an 11 point difference between critical and general audiences seems quite large to me. This made me wonder how frequently critics and general audiences are in disagreement on the quality of a movie, and what factors may be associated with this mismatch.&lt;/p&gt;
-
-&lt;p&gt;For this project, I will be looking at movies released in the last decade (movies released between January 1, 2006 and January 1, 2017), and identifying which movies have a score difference of 10 points or more between top critics and all critics on Rotten Tomatoes. I will then cull text data from the reviews as well as movie data from IMDB to see if I can find any patterns among movies for which there is a disconnect between critics and online reviewers.&lt;/p&gt;
-
-&lt;p&gt;&lt;a href="http://joshuahernandezblog.com/blog/MovieProject/web-scraping-with-r/"&gt;Read more…&lt;/a&gt; (21 min remaining to read)&lt;/p&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;</description><guid>http://joshuahernandezblog.com/blog/MovieProject/web-scraping-with-r/</guid><pubDate>Fri, 18 Aug 2017 06:14:20 GMT</pubDate></item></channel></rss>
+&lt;h2 id="Abstract"&gt;Abstract&lt;a class="anchor-link" href="http://joshuahernandezblog.com/blog/MovieProject/web-scraping-with-r/#Abstract"&gt;¶&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;&lt;i&gt; I go over how to harvest information from web pages by culling movie information from Rotten Tomatoes in order to determine how often critics disagree with general audiences when rating movies. &lt;/i&gt;
+&lt;/p&gt;&lt;p&gt;&lt;a href="http://joshuahernandezblog.com/blog/MovieProject/web-scraping-with-r/"&gt;Read more…&lt;/a&gt; (23 min remaining to read)&lt;/p&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;</description><guid>http://joshuahernandezblog.com/blog/MovieProject/web-scraping-with-r/</guid><pubDate>Fri, 18 Aug 2017 06:14:20 GMT</pubDate></item></channel></rss>

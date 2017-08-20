@@ -14,26 +14,7 @@ article: http://ogp.me/ns/article#
 <meta property="og:site_name" content="Joshua Hernandez's Blog">
 <meta property="og:title" content="Web Scraping with R">
 <meta property="og:url" content="http://joshuahernandezblog.com/blog/MovieProject/web-scraping-with-r/">
-<meta property="og:description" content="In [8]:
-
-    
-#Required Libraries.
-library(rvest)
-library(httr)
-library(ggplot2)
-library(reshape2)
-
-
-
-
-
-
-
-
-
-
-
-Table of Contents¶1  The Problem2  Getting the Data2.1  Getting Started2.2  Scraping Our F">
+<meta property="og:description" content="Abstract¶ I go over how to harvest information from web pages by culling movie information from Rotten Tomatoes in order to determine how often critics disagree with general audiences when rating movi">
 <meta property="og:type" content="article">
 <meta property="article:published_time" content="2017-08-18T02:14:20-04:00">
 </head>
@@ -44,8 +25,7 @@ Table of Contents¶1  The Problem2  Getting the Data2.1  Getting Started2.
             <li><a href="../../../categories/index.html" title="Tags"><i class="icon-tags"></i></a></li>
             <li><a href="../../../rss.xml" title="RSS"><i class="icon-rss"></i></a></li>
             <li><a href="https://getnikola.com" title="About me"><i class="icon-user"></i></a></li>
-            <li><a href="https://twitter.com/getnikola" title="My Twitter"><i class="icon-twitter"></i></a></li>
-            <li><a href="https://github.com/getnikola" title="My Github"><i class="icon-github"></i></a></li>
+            <li><a href="../../../about-me/index.html" title="My Github"><i class="icon-github"></i></a></li>
 
         </ul></section><section class="page-content"><div class="content" rel="main">
     <div class="post">
@@ -65,22 +45,18 @@ Table of Contents¶1  The Problem2  Getting the Data2.1  Getting Started2.
             <div tabindex="-1" id="notebook" class="border-box-sizing">
     <div class="container" id="notebook-container">
 
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In [8]:</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
 <div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-r"><pre><span></span><span class="c1">#Required Libraries.</span>
-<span class="kn">library</span><span class="p">(</span>rvest<span class="p">)</span>
-<span class="kn">library</span><span class="p">(</span>httr<span class="p">)</span>
-<span class="kn">library</span><span class="p">(</span>ggplot2<span class="p">)</span>
-<span class="kn">library</span><span class="p">(</span>reshape2<span class="p">)</span>
-</pre></div>
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Abstract">Abstract<a class="anchor-link" href="#Abstract">¶</a>
+</h2>
+<p><i> I go over how to harvest information from web pages by culling movie information from Rotten Tomatoes in order to determine how often critics disagree with general audiences when rating movies. </i>
+<!--TEASER_END--></p>
 
 </div>
 </div>
-</div>
-
 </div>
 <div class="cell border-box-sizing text_cell rendered">
 <div class="prompt input_prompt">
@@ -91,16 +67,17 @@ Table of Contents¶1  The Problem2  Getting the Data2.1  Getting Started2.
 </h2>
 <p></p>
 <p></p>
-<div class="lev1 toc-item"><a href="#The-Problem" data-toc-modified-id="The-Problem-1"><span class="toc-item-num">1  </span>The Problem</a></div>
-<div class="lev1 toc-item"><a href="#Getting-the-Data" data-toc-modified-id="Getting-the-Data-2"><span class="toc-item-num">2  </span>Getting the Data</a></div>
-<div class="lev2 toc-item"><a href="#Getting-Started" data-toc-modified-id="Getting-Started-21"><span class="toc-item-num">2.1  </span>Getting Started</a></div>
-<div class="lev2 toc-item"><a href="#Scraping-Our-First-Page" data-toc-modified-id="Scraping-Our-First-Page-22"><span class="toc-item-num">2.2  </span>Scraping Our First Page</a></div>
-<div class="lev2 toc-item"><a href="#Scraping-with-httr-and-Regular-Expressions" data-toc-modified-id="Scraping-with-httr-and-Regular-Expressions-23"><span class="toc-item-num">2.3  </span>Scraping with httr and Regular Expressions</a></div>
-<div class="lev2 toc-item"><a href="#Extracting-Movie-Info" data-toc-modified-id="Extracting-Movie-Info-24"><span class="toc-item-num">2.4  </span>Extracting Movie Info</a></div>
-<div class="lev1 toc-item"><a href="#Data-Cleaning-&amp;-Exploration" data-toc-modified-id="Data-Cleaning-&amp;-Exploration-3"><span class="toc-item-num">3  </span>Data Cleaning &amp; Exploration</a></div>
-<div class="lev2 toc-item"><a href="#Preliminary-Questions" data-toc-modified-id="Preliminary-Questions-31"><span class="toc-item-num">3.1  </span>Preliminary Questions</a></div>
-<div class="lev2 toc-item"><a href="#Data-Cleaning" data-toc-modified-id="Data-Cleaning-32"><span class="toc-item-num">3.2  </span>Data Cleaning</a></div>
-<div class="lev2 toc-item"><a href="#Data-Exploration" data-toc-modified-id="Data-Exploration-33"><span class="toc-item-num">3.3  </span>Data Exploration</a></div>
+<div class="lev1 toc-item"><a href="#Abstract" data-toc-modified-id="Abstract-1"><span class="toc-item-num">1  </span>Abstract</a></div>
+<div class="lev1 toc-item"><a href="#The-Problem" data-toc-modified-id="The-Problem-2"><span class="toc-item-num">2  </span>The Problem</a></div>
+<div class="lev1 toc-item"><a href="#Getting-the-Data" data-toc-modified-id="Getting-the-Data-3"><span class="toc-item-num">3  </span>Getting the Data</a></div>
+<div class="lev2 toc-item"><a href="#Getting-Started" data-toc-modified-id="Getting-Started-31"><span class="toc-item-num">3.1  </span>Getting Started</a></div>
+<div class="lev2 toc-item"><a href="#Scraping-Our-First-Page" data-toc-modified-id="Scraping-Our-First-Page-32"><span class="toc-item-num">3.2  </span>Scraping Our First Page</a></div>
+<div class="lev2 toc-item"><a href="#Scraping-with-httr-and-Regular-Expressions" data-toc-modified-id="Scraping-with-httr-and-Regular-Expressions-33"><span class="toc-item-num">3.3  </span>Scraping with httr and Regular Expressions</a></div>
+<div class="lev2 toc-item"><a href="#Extracting-Movie-Info" data-toc-modified-id="Extracting-Movie-Info-34"><span class="toc-item-num">3.4  </span>Extracting Movie Info</a></div>
+<div class="lev1 toc-item"><a href="#Data-Cleaning-&amp;-Exploration" data-toc-modified-id="Data-Cleaning-&amp;-Exploration-4"><span class="toc-item-num">4  </span>Data Cleaning &amp; Exploration</a></div>
+<div class="lev2 toc-item"><a href="#Preliminary-Questions" data-toc-modified-id="Preliminary-Questions-41"><span class="toc-item-num">4.1  </span>Preliminary Questions</a></div>
+<div class="lev2 toc-item"><a href="#Data-Cleaning" data-toc-modified-id="Data-Cleaning-42"><span class="toc-item-num">4.2  </span>Data Cleaning</a></div>
+<div class="lev2 toc-item"><a href="#Data-Exploration" data-toc-modified-id="Data-Exploration-43"><span class="toc-item-num">4.3  </span>Data Exploration</a></div>
 
 </div>
 </div>
@@ -120,12 +97,8 @@ Table of Contents¶1  The Problem2  Getting the Data2.1  Getting Started2.
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<!--TEASER_START-->
 <p> Recently there has been a string of movies where there is a strong mismatch between the critical reception and audience reception. For example, <i>Get Out</i> recieved wide critical aclaim, with 99% of critical reviews being positive; however, only 88% of general audience reviews were positive. 88% is still a very good score, but an 11 point difference between critical and general audiences seems quite large to me. This made me wonder how frequently critics and general audiences are in disagreement on the quality of a movie, and what factors may be associated with this mismatch.</p>
-
 <p>For this project, I will be looking at movies released in the last decade (movies released between January 1, 2006 and January 1, 2017), and identifying which movies have a score difference of 10 points or more between top critics and all critics on Rotten Tomatoes. I will then cull text data from the reviews as well as movie data from IMDB to see if I can find any patterns among movies for which there is a disconnect between critics and online reviewers.</p>
-
-<!--TEASER_END-->
 </div>
 </div>
 </div>
@@ -157,6 +130,41 @@ Table of Contents¶1  The Problem2  Getting the Data2.1  Getting Started2.
 </h3>
 </div>
 </div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In [1]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-r"><pre><span></span><span class="c1">#Required Libraries.</span>
+<span class="kn">library</span><span class="p">(</span>rvest<span class="p">)</span>
+<span class="kn">library</span><span class="p">(</span>httr<span class="p">)</span>
+<span class="kn">library</span><span class="p">(</span>ggplot2<span class="p">)</span>
+<span class="kn">library</span><span class="p">(</span>reshape2<span class="p">)</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+<div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stderr output_text">
+<pre>Loading required package: xml2
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
 </div>
 <div class="cell border-box-sizing text_cell rendered">
 <div class="prompt input_prompt">
