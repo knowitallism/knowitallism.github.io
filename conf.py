@@ -26,7 +26,7 @@ SITE_URL = "http://joshuahernandezblog.com/"
 # If not set, defaults to SITE_URL
 # BASE_URL = "http://joshuahernandezblog.com/"
 BLOG_EMAIL = "Joshua.M.S.Hernandez@gmail.com"
-BLOG_DESCRIPTION = "This is a demo site for Nikola."  # (translatable)
+BLOG_DESCRIPTION = "A collection of data science projects and tutorials"  # (translatable)
 
 # Nikola is multilingual!
 #
