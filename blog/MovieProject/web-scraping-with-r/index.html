@@ -14,7 +14,7 @@ article: http://ogp.me/ns/article#
 <meta property="og:site_name" content="Joshua Hernandez's Blog">
 <meta property="og:title" content="Web Scraping with R">
 <meta property="og:url" content="http://joshuahernandezblog.com/blog/MovieProject/web-scraping-with-r/">
-<meta property="og:description" content="Abstract¶ I go over how to harvest information from web pages by culling movie information from Rotten Tomatoes in order to determine how often critics disagree with general audiences when rating movi">
+<meta property="og:description" content="I go over how to use R to harvest information from web pages. This post chronicles my use of rvest to harvest movie information from Rotten Tomatoes to explore the difference between professional crit">
 <meta property="og:type" content="article">
 <meta property="article:published_time" content="2017-08-18T02:14:20-04:00">
 <meta property="article:tag" content="data extraction">
@@ -63,9 +63,7 @@ article: http://ogp.me/ns/article#
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Abstract">Abstract<a class="anchor-link" href="#Abstract">¶</a>
-</h2>
-<p><i> I go over how to harvest information from web pages by culling movie information from Rotten Tomatoes in order to determine how often critics disagree with general audiences when rating movies. </i>
+<p><i> I go over how to use R to harvest information from web pages. This post chronicles my use of rvest to harvest movie information from Rotten Tomatoes to explore the difference between professional critics and general audiences. </i>
 <!--TEASER_END--></p>
 
 </div>
@@ -80,17 +78,16 @@ article: http://ogp.me/ns/article#
 </h2>
 <p></p>
 <p></p>
-<div class="lev1 toc-item"><a href="#Abstract" data-toc-modified-id="Abstract-1"><span class="toc-item-num">1  </span>Abstract</a></div>
-<div class="lev1 toc-item"><a href="#The-Problem" data-toc-modified-id="The-Problem-2"><span class="toc-item-num">2  </span>The Problem</a></div>
-<div class="lev1 toc-item"><a href="#Getting-the-Data" data-toc-modified-id="Getting-the-Data-3"><span class="toc-item-num">3  </span>Getting the Data</a></div>
-<div class="lev2 toc-item"><a href="#Getting-Started" data-toc-modified-id="Getting-Started-31"><span class="toc-item-num">3.1  </span>Getting Started</a></div>
-<div class="lev2 toc-item"><a href="#Scraping-Our-First-Page" data-toc-modified-id="Scraping-Our-First-Page-32"><span class="toc-item-num">3.2  </span>Scraping Our First Page</a></div>
-<div class="lev2 toc-item"><a href="#Scraping-with-httr-and-Regular-Expressions" data-toc-modified-id="Scraping-with-httr-and-Regular-Expressions-33"><span class="toc-item-num">3.3  </span>Scraping with httr and Regular Expressions</a></div>
-<div class="lev2 toc-item"><a href="#Extracting-Movie-Info" data-toc-modified-id="Extracting-Movie-Info-34"><span class="toc-item-num">3.4  </span>Extracting Movie Info</a></div>
-<div class="lev1 toc-item"><a href="#Data-Cleaning-&amp;-Exploration" data-toc-modified-id="Data-Cleaning-&amp;-Exploration-4"><span class="toc-item-num">4  </span>Data Cleaning &amp; Exploration</a></div>
-<div class="lev2 toc-item"><a href="#Preliminary-Questions" data-toc-modified-id="Preliminary-Questions-41"><span class="toc-item-num">4.1  </span>Preliminary Questions</a></div>
-<div class="lev2 toc-item"><a href="#Data-Cleaning" data-toc-modified-id="Data-Cleaning-42"><span class="toc-item-num">4.2  </span>Data Cleaning</a></div>
-<div class="lev2 toc-item"><a href="#Data-Exploration" data-toc-modified-id="Data-Exploration-43"><span class="toc-item-num">4.3  </span>Data Exploration</a></div>
+<div class="lev1 toc-item"><a href="#The-Problem" data-toc-modified-id="The-Problem-1"><span class="toc-item-num">1  </span>The Problem</a></div>
+<div class="lev1 toc-item"><a href="#Getting-the-Data" data-toc-modified-id="Getting-the-Data-2"><span class="toc-item-num">2  </span>Getting the Data</a></div>
+<div class="lev2 toc-item"><a href="#Getting-Started" data-toc-modified-id="Getting-Started-21"><span class="toc-item-num">2.1  </span>Getting Started</a></div>
+<div class="lev2 toc-item"><a href="#Scraping-Our-First-Page" data-toc-modified-id="Scraping-Our-First-Page-22"><span class="toc-item-num">2.2  </span>Scraping Our First Page</a></div>
+<div class="lev2 toc-item"><a href="#Scraping-with-httr-and-Regular-Expressions" data-toc-modified-id="Scraping-with-httr-and-Regular-Expressions-23"><span class="toc-item-num">2.3  </span>Scraping with httr and Regular Expressions</a></div>
+<div class="lev2 toc-item"><a href="#Extracting-Movie-Info" data-toc-modified-id="Extracting-Movie-Info-24"><span class="toc-item-num">2.4  </span>Extracting Movie Info</a></div>
+<div class="lev1 toc-item"><a href="#Data-Cleaning-&amp;-Exploration" data-toc-modified-id="Data-Cleaning-&amp;-Exploration-3"><span class="toc-item-num">3  </span>Data Cleaning &amp; Exploration</a></div>
+<div class="lev2 toc-item"><a href="#Preliminary-Questions" data-toc-modified-id="Preliminary-Questions-31"><span class="toc-item-num">3.1  </span>Preliminary Questions</a></div>
+<div class="lev2 toc-item"><a href="#Data-Cleaning" data-toc-modified-id="Data-Cleaning-32"><span class="toc-item-num">3.2  </span>Data Cleaning</a></div>
+<div class="lev2 toc-item"><a href="#Data-Exploration" data-toc-modified-id="Data-Exploration-33"><span class="toc-item-num">3.3  </span>Data Exploration</a></div>
 
 </div>
 </div>
@@ -1678,7 +1675,7 @@ GenreTable <span class="o">=</span> <span class="kp">subset</span><span class="p
         </div>
                 <ul class="pager hidden-print">
 <li class="next">
-                <a href="../into-the-woods-visualizing-random-forests-with-r/" rel="next" title="Into the Woods: Visualizing Random Forests with R">Next post</a>
+                <a href="../../into-the-woods-visualizing-random-forests-with-r/" rel="next" title="Into the Woods: Visualizing Random Forests with R">Next post</a>
             </li>
         </ul>
 </div>

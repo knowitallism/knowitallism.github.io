@@ -7,14 +7,14 @@ article: http://ogp.me/ns/article#
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width">
 <title>Into the Woods: Visualizing Random Forests with R | Joshua Hernandez's Blog</title>
-<link href="../../../assets/css/all-nocdn.css" rel="stylesheet" type="text/css">
-<link rel="alternate" type="application/rss+xml" title="RSS" href="../../../rss.xml">
-<link rel="canonical" href="http://joshuahernandezblog.com/blog/MovieProject/into-the-woods-visualizing-random-forests-with-r/">
+<link href="../../assets/css/all-nocdn.css" rel="stylesheet" type="text/css">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="../../rss.xml">
+<link rel="canonical" href="http://joshuahernandezblog.com/blog/into-the-woods-visualizing-random-forests-with-r/">
 <!--[if lt IE 9]><script src="/assets/js/html5.js"></script><![endif]--><meta name="author" content="Joshua Hernandez">
 <meta property="og:site_name" content="Joshua Hernandez's Blog">
 <meta property="og:title" content="Into the Woods: Visualizing Random Forests with R">
-<meta property="og:url" content="http://joshuahernandezblog.com/blog/MovieProject/into-the-woods-visualizing-random-forests-with-r/">
-<meta property="og:description" content="Abstract¶ You've probably heard of random forest models described as &quot;black boxes,&quot; models that show an input and an output and nothing in between. In this post, we go over techniques to show what our">
+<meta property="og:url" content="http://joshuahernandezblog.com/blog/into-the-woods-visualizing-random-forests-with-r/">
+<meta property="og:description" content="You've probably heard random forest models described as &quot;black boxes,&quot; models that show an input and an output and nothing in between. In this post, we go over techniques to show what a random forest ">
 <meta property="og:type" content="article">
 <meta property="article:published_time" content="2017-08-21T09:48:17-04:00">
 <meta property="article:tag" content="Machine Learning">
@@ -23,11 +23,11 @@ article: http://ogp.me/ns/article#
 </head>
 <body>
     <section class="social"><ul>
-<li><a href="../../../index.html" title="Home"><i class="icon-home"></i></a></li>
-            <li><a href="../../../archive.html" title="Archives"><i class="icon-folder-open-alt"></i></a></li>
-            <li><a href="../../../categories/index.html" title="Tags"><i class="icon-tags"></i></a></li>
-            <li><a href="../../../rss.xml" title="RSS"><i class="icon-rss"></i></a></li>
-            <li><a href="../../../about-me/index.html" title="About me"><i class="icon-user"></i></a></li>
+<li><a href="../../index.html" title="Home"><i class="icon-home"></i></a></li>
+            <li><a href="../../archive.html" title="Archives"><i class="icon-folder-open-alt"></i></a></li>
+            <li><a href="../../categories/index.html" title="Tags"><i class="icon-tags"></i></a></li>
+            <li><a href="../../rss.xml" title="RSS"><i class="icon-rss"></i></a></li>
+            <li><a href="../../about-me/index.html" title="About me"><i class="icon-user"></i></a></li>
             <li><a href="#" title="My Github"><i class="icon-github"></i></a></li>
 
         </ul></section><section class="page-content"><div class="content" rel="main">
@@ -45,9 +45,9 @@ article: http://ogp.me/ns/article#
                     <div itemprop="keywords" class="tags">
         <ul>
         Tags : 
-           <li><a class="tag p-category" href="../../../categories/machine-learning/" rel="tag">Machine Learning</a></li>
-           <li><a class="tag p-category" href="../../../categories/quick-post/" rel="tag">Quick Post</a></li>
-           <li><a class="tag p-category" href="../../../categories/random-forest/" rel="tag">Random Forest</a></li>
+           <li><a class="tag p-category" href="../../categories/machine-learning/" rel="tag">Machine Learning</a></li>
+           <li><a class="tag p-category" href="../../categories/quick-post/" rel="tag">Quick Post</a></li>
+           <li><a class="tag p-category" href="../../categories/random-forest/" rel="tag">Random Forest</a></li>
         </ul>
 </div>
 
@@ -61,9 +61,7 @@ article: http://ogp.me/ns/article#
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Abstract">Abstract<a class="anchor-link" href="#Abstract">¶</a>
-</h2>
-<p><i> You've probably heard of random forest models described as "black boxes," models that show an input and an output and nothing in between. In this post, we go over techniques to show what our random forest model is doing, to make it less of a black box. </i></p>
+<p><i> You've probably heard random forest models described as "black boxes," models that show an input and an output and nothing in between. In this post, we go over techniques to show what a random forest model is doing, to make it less of a black box. </i></p>
 <!--TEASER_END-->
 </div>
 </div>
@@ -77,12 +75,11 @@ article: http://ogp.me/ns/article#
 </h2>
 <p></p>
 <p></p>
-<div class="lev1 toc-item"><a href="#Abstract" data-toc-modified-id="Abstract-1"><span class="toc-item-num">1  </span>Abstract</a></div>
-<div class="lev1 toc-item"><a href="#Partial-Dependence-Plots" data-toc-modified-id="Partial-Dependence-Plots-2"><span class="toc-item-num">2  </span>Partial Dependence Plots</a></div>
-<div class="lev2 toc-item"><a href="#What-Partial-Dependence-Plots-Are" data-toc-modified-id="What-Partial-Dependence-Plots-Are-21"><span class="toc-item-num">2.1  </span>What Partial Dependence Plots Are</a></div>
-<div class="lev1 toc-item"><a href="#Extracting-Rules-From-Random-Forests" data-toc-modified-id="Extracting-Rules-From-Random-Forests-3"><span class="toc-item-num">3  </span>Extracting Rules From Random Forests</a></div>
-<div class="lev1 toc-item"><a href="#Variable-Importance" data-toc-modified-id="Variable-Importance-4"><span class="toc-item-num">4  </span>Variable Importance</a></div>
-<div class="lev1 toc-item"><a href="#Further-Reading" data-toc-modified-id="Further-Reading-5"><span class="toc-item-num">5  </span>Further Reading</a></div>
+<div class="lev1 toc-item"><a href="#Partial-Dependence-Plots" data-toc-modified-id="Partial-Dependence-Plots-1"><span class="toc-item-num">1  </span>Partial Dependence Plots</a></div>
+<div class="lev2 toc-item"><a href="#What-Partial-Dependence-Plots-Are" data-toc-modified-id="What-Partial-Dependence-Plots-Are-11"><span class="toc-item-num">1.1  </span>What Partial Dependence Plots Are</a></div>
+<div class="lev1 toc-item"><a href="#Extracting-Rules-From-Random-Forests" data-toc-modified-id="Extracting-Rules-From-Random-Forests-2"><span class="toc-item-num">2  </span>Extracting Rules From Random Forests</a></div>
+<div class="lev1 toc-item"><a href="#Variable-Importance" data-toc-modified-id="Variable-Importance-3"><span class="toc-item-num">3  </span>Variable Importance</a></div>
+<div class="lev1 toc-item"><a href="#Further-Reading" data-toc-modified-id="Further-Reading-4"><span class="toc-item-num">4  </span>Further Reading</a></div>
 
 </div>
 </div>
@@ -113,8 +110,8 @@ article: http://ogp.me/ns/article#
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>At its most basic form, a partial dependence plot is a graph showing your model's relationship to a single variable. How it does that exactly depends on whether you are using your random forest for classification or regression.</p>
-<p>For a regression model, the intuitive way to understand a partial dependence plot is a graph that shows us how our predicted value, $Y$, varies with a single free variable, $X$, when we average out the effects of all the other variables, $C$, in our model. How the partial dependence plot averages out the effects of the non-free variable is actually pretty cool, albeit, computationally intensive. First the algorithm will set X to a fixed value, then it will calculate $Y$ values at that fixed $X$ value, for every value of $C$ that appears in the training data. Those Y values are then averaged, and this process is repeated for every $X$ value that appears in the training data. I.e.</p>$$ \overline{Y}(X) = \frac{1}{N} \sum_{i=1}^N Y(X, C_i) $$<p>where {${C_1, C_2...C_N}$} are occurrences of $C$ that appear in the training data</p>
-<p>Understanding how partial dependence plots work for classification models requires a little bit more understanding of how random forests work. For a quick recap, random forests operate by creating multiple tree models, and having each model vote on the outcome, with better performing models being allotted more votes. If you want a more through explanation on how random forests are built, I suggest you read <a href="http://blog.citizennet.com/blog/2012/11/10/random-forests-ensembles-and-performance-metrics">this</a>.  A partial dependence plot in this case allows us to see the outcome of that vote for a single variable.</p>
+<p>For a regression model, the intuitive way to understand a partial dependence plot is a graph that shows us how our predicted value, \\(Y\\), varies with a single free variable, \\(X\\), when we average out the effects of all the other variables, \\(C\\), in our model. How the partial dependence plot averages out the effects of the non-free variable is actually pretty cool, albeit, computationally intensive. First the algorithm will set X to a fixed value, then it will calculate \\(Y\\) values at that fixed \\(X\\) value, for every value of \\(C\\) that appears in the training data. Those Y values are then averaged, and this process is repeated for every \\(X\\) value that appears in the training data. I.e.</p>$$ \overline{Y}(X) = \frac{1}{N} \sum_{i=1}^N Y(X, C_i) $$<p>where \({C_1, C_2...C_N}\) are occurrences of \(C\) that appear in the training data</p>
+<p>Understanding how partial dependence plots work for classification models requires a little bit more understanding of how random forests work. For a quick recap, random forests operate by creating multiple tree models, and having each model vote on the outcome, with better performing models being allotted more votes. If you want a more thorough explanation on how random forests are built, I suggest you read <a href="http://blog.citizennet.com/blog/2012/11/10/random-forests-ensembles-and-performance-metrics">this</a>.  A partial dependence plot in this case allows us to see the outcome of that vote for a single variable.</p>
 </div>
 </div>
 </div>
@@ -243,7 +240,10 @@ imp
         </div>
                 <ul class="pager hidden-print">
 <li class="previous">
-                <a href="../web-scraping-with-r/" rel="prev" title="Web Scraping with R">Previous post</a>
+                <a href="../MovieProject/web-scraping-with-r/" rel="prev" title="Web Scraping with R">Previous post</a>
+            </li>
+            <li class="next">
+                <a href="../less-is-more-on-the-importance-of-feature-reduction/" rel="next" title="Less is More: On the Importance of Feature Reduction">Next post</a>
             </li>
         </ul>
 </div>
@@ -251,7 +251,7 @@ imp
             
         </footer>
 </div>
-    </section><script src="../../../assets/js/all-nocdn.js" type="text/javascript"></script><script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"> </script><script type="text/x-mathjax-config">
+    </section><script src="../../assets/js/all-nocdn.js" type="text/javascript"></script><script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"> </script><script type="text/x-mathjax-config">
     MathJax.Hub.Config({tex2jax: {inlineMath: [['$latex ','$'], ['\\(','\\)']]}});
     </script><script type="text/javascript">
             $(function(){
