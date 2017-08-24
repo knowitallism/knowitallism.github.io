@@ -26,7 +26,7 @@ SITE_URL = "http://joshuahernandezblog.com/"
 # If not set, defaults to SITE_URL
 # BASE_URL = "http://joshuahernandezblog.com/"
 BLOG_EMAIL = "Joshua.M.S.Hernandez@gmail.com"
-BLOG_DESCRIPTION = "A collection of data science projects and tutorials"  # (translatable)
+BLOG_DESCRIPTION = "This is a demo site for Nikola."  # (translatable)
 
 # Nikola is multilingual!
 #
@@ -320,7 +320,7 @@ COMPILERS = {
 
 # If you want to hide the title of your website (for example, if your logo
 # already contains the text), set this to False.
-# SHOW_BLOG_TITLE = True
+SHOW_BLOG_TITLE = True
 
 # Writes tag cloud data in form of tag_cloud_data.json.
 # Warning: this option will change its default value to False in v8!
@@ -554,7 +554,7 @@ HIDDEN_AUTHORS = ['Guest']
 # Final location for the main blog page and sibling paginated pages is
 # output / TRANSLATION[lang] / INDEX_PATH / index-*.html
 # (translatable)
-# INDEX_PATH = ""
+#INDEX_PATH = "posts"
 
 # Optional HTML that displayed on “main” blog index.html files.
 # May be used for a greeting. (translatable)
@@ -1094,10 +1094,10 @@ PRETTY_URLS = True
 # """
 
 # Do you want to customize the nbconversion of your IPython notebook?
-# IPYNB_CONFIG = {}
+#IPYNB_CONFIG = {}
 # With the following example configuration you can use a custom jinja template
 # called `toggle.tpl` which has to be located in your site/blog main folder:
-IPYNB_CONFIG = {'Exporter':{'template_file': 'toggle'}}
+IPYNB_CONFIG = {'Exporter':{'ipython_config': 'toggle'}}
 
 # What Markdown extensions to enable?
 # You will also get gist, nikola and podcast because those are
