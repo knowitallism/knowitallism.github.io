@@ -83,10 +83,10 @@ article: http://ogp.me/ns/article#
 <div class="lev2 toc-item"><a href="#Getting-Started" data-toc-modified-id="Getting-Started-21"><span class="toc-item-num">2.1  </span>Getting Started</a></div>
 <div class="lev2 toc-item"><a href="#Scraping-Our-First-Page" data-toc-modified-id="Scraping-Our-First-Page-22"><span class="toc-item-num">2.2  </span>Scraping Our First Page</a></div>
 <div class="lev2 toc-item"><a href="#Scraping-with-httr-and-Regular-Expressions" data-toc-modified-id="Scraping-with-httr-and-Regular-Expressions-23"><span class="toc-item-num">2.3  </span>Scraping with httr and Regular Expressions</a></div>
-<div class="lev2 toc-item"><a href="#Extracting-Movie-Info" data-toc-modified-id="Extracting-Movie-Info-24"><span class="toc-item-num">2.4  </span>Extracting Movie Info</a></div>
+<div class="lev2 toc-item"><a href="#Extracting-Movie-Info-From-Rotten-Tomatoes" data-toc-modified-id="Extracting-Movie-Info-From-Rotten-Tomatoes-24"><span class="toc-item-num">2.4  </span>Extracting Movie Info From Rotten Tomatoes</a></div>
 <div class="lev1 toc-item"><a href="#Data-Cleaning-&amp;-Exploration" data-toc-modified-id="Data-Cleaning-&amp;-Exploration-3"><span class="toc-item-num">3  </span>Data Cleaning &amp; Exploration</a></div>
-<div class="lev2 toc-item"><a href="#Preliminary-Questions" data-toc-modified-id="Preliminary-Questions-31"><span class="toc-item-num">3.1  </span>Preliminary Questions</a></div>
-<div class="lev2 toc-item"><a href="#Data-Cleaning" data-toc-modified-id="Data-Cleaning-32"><span class="toc-item-num">3.2  </span>Data Cleaning</a></div>
+<div class="lev2 toc-item"><a href="#Data-Cleaning" data-toc-modified-id="Data-Cleaning-31"><span class="toc-item-num">3.1  </span>Data Cleaning</a></div>
+<div class="lev2 toc-item"><a href="#Preliminary-Questions" data-toc-modified-id="Preliminary-Questions-32"><span class="toc-item-num">3.2  </span>Preliminary Questions</a></div>
 <div class="lev2 toc-item"><a href="#Data-Exploration" data-toc-modified-id="Data-Exploration-33"><span class="toc-item-num">3.3  </span>Data Exploration</a></div>
 
 </div>
@@ -107,8 +107,8 @@ article: http://ogp.me/ns/article#
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p> Recently there has been a string of movies where there is a strong mismatch between the critical reception and audience reception. For example, <i>Get Out</i> recieved wide critical aclaim, with 99% of critical reviews being positive; however, only 88% of general audience reviews were positive. 88% is still a very good score, but an 11 point difference between critical and general audiences seems quite large to me. This made me wonder how frequently critics and general audiences are in disagreement on the quality of a movie, and what factors may be associated with this mismatch.</p>
-<p>For this project, I will be looking at movies released in the last decade (movies released between January 1, 2006 and January 1, 2017), and identifying which movies have a score difference of 10 points or more between top critics and all critics on Rotten Tomatoes. I will then cull text data from the reviews as well as movie data from IMDB to see if I can find any patterns among movies for which there is a disconnect between critics and online reviewers.</p>
+<p> Recently, I was reading this <a href="https://www.vanityfair.com/hollywood/2017/03/brett-ratner-rotten-tomatoes"> article</a>, which mentions some of Hollywood's discontent for Rotten Tomatoes. This made me wonder how useful critic scores are for the average person. That is to say, do critics and general audiences generally feel the same way about movies, or is there actually a large disconnect between audiences and professional critics? After all, it is possible that professional movie critics and your average movie goer are looking for completely different things; in which case, a critic's opinion may only be useful to people who think like critics. </p>
+<p>After thinking about it, I decided that a review aggregator like Rotten Tomatoes would be perfect for answering my question, since the website has already compiled statistics on profession movie reviews, but also has a large number of user-generated reviews. So I will use R to scrape movie data from Rotten Tomatoes to answer my question. (I probably could get the same information by downloading an API, but I really wanted to learn how to scrape a website for data.) </p>
 </div>
 </div>
 </div>
@@ -127,7 +127,7 @@ article: http://ogp.me/ns/article#
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p><i>To create a better user experience, I have made various versions of my data set available for download. If you want to run a snippet of code, you do not have to run all of my code from scratch. Simply scroll up and look for the last version of my data set available for download.</i> </p>
+<p><i>To create a better user experience, I have made various versions of my data set available for download. That way you can run a snippet of code without actually having to scrape web pages,which can be time intensive.</i> </p>
 </div>
 </div>
 </div>
@@ -143,7 +143,7 @@ article: http://ogp.me/ns/article#
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In [1]:</div>
+<div class="prompt input_prompt">In [108]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-r"><pre><span></span><span class="c1">#Required Libraries.</span>
@@ -157,31 +157,13 @@ article: http://ogp.me/ns/article#
 </div>
 </div>
 
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area">
-
-<div class="prompt"></div>
-
-
-<div class="output_subarea output_stream output_stderr output_text">
-<pre>Loading required package: xml2
-</pre>
-</div>
-</div>
-
-</div>
-</div>
-
 </div>
 <div class="cell border-box-sizing text_cell rendered">
 <div class="prompt input_prompt">
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>There are several libraries which allow one to scrape web data on R, but I will be using the rvest library. It has a very clean and compact design, easy to use selectr tools, and the magittr funcionality allows you to write very elegant code. Magittr allows you to use "%&gt;%" to push an object forward to the next function, allowing you to write code with fewer named arguments. I learned how to use the rvest library by going through this tutorial at <a href="https://www.analyticsvidhya.com/blog/2017/03/beginners-guide-on-web-scraping-in-r-using-rvest-with-hands-on-knowledge/">analyticsvidhya.com</a>, but I will also describe the steps I took in using rvest here. </p>
+<p>I will be using the rvest library since it has a clean and compact design, easy to use selectr tools, and the magittr funcionality allows you to write very elegant code. (Magittr allows you to use "%&gt;%" to push an object forward to the next function, allowing you to write code with fewer named arguments.) I learned how to use rvest by reading this <a href="https://www.analyticsvidhya.com/blog/2017/03/beginners-guide-on-web-scraping-in-r-using-rvest-with-hands-on-knowledge/">tutorial</a>, but I will also thoroughly describe the steps I took in using it. </p>
 </div>
 </div>
 </div>
@@ -209,7 +191,7 @@ article: http://ogp.me/ns/article#
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>Now that I know what I want to do, I will create a list of pages to scrape. Since all of the pages I want to scrape follow a pattern, I can use the paste command to generate my list of pages.</p>
+<p>Now that I know what I want to do, I will create a list of pages to scrape. Since all of the pages I want to scrape follow a pattern, I can use the paste command to generate my list of URLs.</p>
 
 </div>
 </div>
@@ -232,8 +214,30 @@ article: http://ogp.me/ns/article#
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>For each page in my list, I will use read_html to convert the web page into an R data frame. html_nodes then allows you to specify which objects you want with css or xpath selectors. The tutorial I linked to earlier advises you to use the SelectorGadget extension on Chrome to figure out the xpath or css selector that you want to use, but I found the SelectorGadget to be pretty finicky. I found it easier to use the inspect element tool available on most browsers: With this method, you right click on the element you want to extract and click "inspect." You should see the corresponding html code appear highlighted on the right. Right click on the highlighted html code and choose copy xpath or copy selector as desired. This will give you the exact path for the specific element you clicked on. Removing numerical information from your path generalizes it, so that it applies to similar elements. Bellow you can see pictures of me doing this for the Wikipedia pages I am scraping.</p>
-<p>If tags create results that are too broad, you can further specify your results by specifying attributes or IDs. For instance, here I use the html_attr function to specify I that want nodes marked as titles.</p>
+<p>For each page in my list, I will use "read_html" to convert the web page into an R data frame. I then use "html_nodes" to specify the exact xpath or <a href="https://www.w3schools.com/cssref/css_selectors.asp">css selector</a> I want. If you are unfamiliar with what a css selector or xpath is, they are essentially ways to specify the location of an object within an html document. I generally find css selectors easier to work with, but xpaths seem to work better with Jupyter notebooks.</p>
+<p>The <a href="https://www.analyticsvidhya.com/blog/2017/03/beginners-guide-on-web-scraping-in-r-using-rvest-with-hands-on-knowledge/">tutorial</a> I linked to earlier advises you to use the <a href="http://selectorgadget.com/">SelectorGadget</a> extension on Chrome to figure out the xpath or css selector that you want to use, but I found the SelectorGadget to be pretty finicky. I found it easier to use the inspect element tool available on most browsers: With this method, you right click on the element you want to extract and click "inspect." You should see the corresponding html code appear highlighted on the right. Right click on the highlighted html code and choose copy xpath or copy selector as desired. This will give you the exact path for the specific element you clicked on. You can then generalize or narrow that path as appropriate. Bellow you can see pictures of me doing this for the Wikipedia pages I am scraping.&lt;/p&gt;</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><img src="attachment:Screen%20Shot%202017-08-26%20at%203.15.50%20PM.png" alt="Screen%20Shot%202017-08-26%20at%203.15.50%20PM.png"></p>
+<p><img src="attachment:Screen%20Shot%202017-08-26%20at%203.16.28%20PM.png" alt="Screen%20Shot%202017-08-26%20at%203.16.28%20PM.png"></p>
+<p><img src="attachment:Screen%20Shot%202017-08-26%20at%203.16.36%20PM.png" alt="Screen%20Shot%202017-08-26%20at%203.16.36%20PM.png"></p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>You can further specify which elements you want by using "html_attr" which gives you the contens of a single attribute. For instance, here I use the html_attr function to specify that I only care about the "title" attribute.</p>
 </div>
 </div>
 </div>
@@ -260,9 +264,9 @@ Titles <span class="o">=</span> <span class="kp">unlist</span><span class="p">(<
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>This gives me the list of movie titles I wanted. Unfortunately, converting that list of titles into a list of Rotten Tomatoes URLs was harder than I anticipated. Initially I thought I could apply a simple rule to turn a title into a URL or use Rotten Tomoatoes' search function to generate my list of URLs. But no such rule exists, and Rotten Tomatoes' search function has wasn't robust enough to do the job.</p>
+<p>The code above gives me the list of movie titles I wanted. Unfortunately, converting that list of titles into a list of Rotten Tomatoes URLs was harder than I anticipated. Initially I thought I create a rule to turn a title into a URL or use Rotten Tomoatoes' search function to generate my list of URLs. But I could find no such rule, and Rotten Tomatoes' search function has wasn't robust enough to do the job.</p>
 <p>I then tried to obtain a list of Rotten Tomatoes URLs by automating a Google search of Rotten Tomatoes + {movie title} and harvesting the top result. But as I later discovered, Google has protections in place to keep people from doing just this kind of thing (though people do get around it). At the end of the day, I decided that it was too impractical to write a scraping script that didn't get flagged down by Google, and that I should look for a better solution. After taking a break from the problem, I realized that most of Wikipedia's movie pages have an <i>External Links</i> section that contain links to movie's Rotten Tomatoe's page. So all I had to do was get a list of individual Wikipedia movie pages, and harvest each page's <i>External Links</i> section to get what I want. </p>
-<p> Getting the list of Wikipedia movie pages is essentially the same as getting my list of titles. The only difference is that I am now harvesting nodes with the attribute "href" instead of "title." so I can reuse my code from the previous section. </p>
+<p> The process for generating a list of Wikipedia movie pages is the same as generating a list of movie titles, except now I care about the "href" attribute instead of the "title" attiribute. So I can reuse my code from the previous section. </p>
 </div>
 </div>
 </div>
@@ -289,7 +293,7 @@ Links <span class="o">=</span> <span class="kp">unlist</span><span class="p">(</
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>Looking over my results, it looks like there are some redundant links. So I'm going to combine my columns into a data frame, and remove repeat entries. </p>
+<p>I then combine my list of titles and URLs into a single dataframe and use the "unique" function to eliminate redundant links.</p>
 </div>
 </div>
 </div>
@@ -322,7 +326,8 @@ MovieTable <span class="o">=</span> <span class="kp">unique</span><span class="p
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p> The first time I tried to collect the Rotten Tomatoes links, my code broke halfway through because one of the Wikipedia URLs I had collected in the previous step had a connection error. To fix this, I used the httr library, which allows me to retrieve information from a URL. I can then tell my code not to run on pages that produce a connection error. If the connection is valid, the code will add the URL it extracts to a collumn I created called "RottenTomatoesLink". At this point, the steps I took were the same: I found a link that I wanted and used the inspect element feature to find its xpath, and generalized its xpath as appropriate. However, because this method will return multiple external links, I also have to use regular expressions to make sure I am only getting external links from Rotten Tomatoes.</p>
+<p> The first time I tried to scrape the links in my data frame, I ran into the following problem: some of the links I had collected in the previous step were invalid. This meant that the "read_html" command would try in vain to load a web page until it timed out, generating an error. To fix this, I used the httr library, which allows me to use the "GET" command to create a response summary for a URL. If the URL is unresponsive, this will show up in the response summary. I can then tell my code not to run on pages that generate a connection error (status code above 300), so that my code doesn't time out.</p>
+ <p>I faced another issue when trying to extract Rotten Tomatoes links from Wikipedia, I couldn't get enough specificity from css selectors and attributes alone. CSS selectors allowed me to specify that I only wanted elements in the <i>External Links</i> section, and html attributes allowed me to specify that I wanted external links, but that still left me with a lot of non-Rotten Tomatoes external links. To get around this, I used regular expressions to filter out any element that didn't contain the "https://www.rottentomatoes.com/m" substring, since I know that I am only interested in links that contain this domain. </p>
 </div>
 </div>
 </div>
@@ -334,8 +339,8 @@ MovieTable <span class="o">=</span> <span class="kp">unique</span><span class="p
 <div class=" highlight hl-r"><pre><span></span>MovieTable<span class="o">$</span>RottenTomatoesLink <span class="o">=</span> <span class="kc">NA</span>
 
 <span class="kr">for</span> <span class="p">(</span>i <span class="kr">in</span> <span class="kp">seq</span><span class="p">(</span><span class="kp">nrow</span><span class="p">(</span>MovieTable<span class="p">)))</span> <span class="p">{</span>
-    Connection <span class="o">=</span> GET<span class="p">(</span>MovieTable<span class="o">$</span>WikipediaLink<span class="p">[</span>i<span class="p">])</span>
-    <span class="kr">if</span> <span class="p">(</span>status_code<span class="p">(</span>Connection<span class="p">)</span> <span class="o">&lt;=</span> <span class="m">300</span><span class="p">)</span> <span class="p">{</span>
+    Connection <span class="o">=</span> GET<span class="p">(</span>MovieTable<span class="o">$</span>WikipediaLink<span class="p">[</span>i<span class="p">])</span> 
+    <span class="kr">if</span> <span class="p">(</span>status_code<span class="p">(</span>Connection<span class="p">)</span> <span class="o">&lt;=</span> <span class="m">300</span><span class="p">)</span> <span class="p">{</span> <span class="c1">#skip over pages that have a connection error</span>
         Link <span class="o">=</span> read_html<span class="p">(</span>MovieTable<span class="o">$</span>WikipediaLink<span class="p">[</span>i<span class="p">])</span> <span class="o">%&gt;%</span> html_nodes<span class="p">(</span>xpath <span class="o">=</span> <span class="s">"//*[@id=\"mw-content-text\"]/div/ul/li/a"</span><span class="p">)</span> <span class="o">%&gt;%</span> 
             html_attr<span class="p">(</span><span class="s">"href"</span><span class="p">)</span>
         
@@ -359,32 +364,77 @@ MovieTable <span class="o">=</span> <span class="kp">unique</span><span class="p
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p><i>I find it odd that I needed to use httr for this, since rvest incorporates httr. I suspect that I may be able to accomplish something similar with rvest alone, but this works for now.</i> </p>
+<p>Now to check my results. </p>
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In [ ]:</div>
+<div class="prompt input_prompt">In [109]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-r"><pre><span></span><span class="kp">load</span><span class="p">(</span><span class="s">'RottenTomatoesLinks.Rda'</span><span class="p">)</span>
+<span class="kp">head</span><span class="p">(</span>MovieTable<span class="p">)</span>
 </pre></div>
 
 </div>
 </div>
 </div>
 
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+<div class="prompt"></div>
+
+
+
+<div class="output_html rendered_html output_subarea ">
+<table>
+<thead><tr>
+<th scope="col">Title</th>
+<th scope="col">WikipediaLink</th>
+<th scope="col">RottenTomatoesLink</th>
+</tr></thead>
+<tbody>
+<tr>
+<td>Pirates of the Caribbean: Dead Man's Chest                                </td>
+<td>https://en.wikipedia.org/wiki/Pirates_of_the_Caribbean:_Dead_Man%27s_Chest</td>
+<td>https://www.rottentomatoes.com/m/pirates_of_the_caribbean_dead_mans_chest/</td>
+</tr>
+<tr>
+<td>The Da Vinci Code (film)                                                  </td>
+<td>https://en.wikipedia.org/wiki/The_Da_Vinci_Code_(film)                    </td>
+<td>https://www.rottentomatoes.com/m/da_vinci_code/                           </td>
+</tr>
+<tr>
+<td>Ice Age: The Meltdown                                                     </td>
+<td>https://en.wikipedia.org/wiki/Ice_Age:_The_Meltdown                       </td>
+<td>https://www.rottentomatoes.com/m/ice_age_2/                               </td>
+</tr>
+<tr>
+<td>Casino Royale (2006 film)                                                 </td>
+<td>https://en.wikipedia.org/wiki/Casino_Royale_(2006_film)                   </td>
+<td>https://www.rottentomatoes.com/m/casino_royale/                           </td>
+</tr>
+<tr>
+<td>Night at the Museum                                                       </td>
+<td>https://en.wikipedia.org/wiki/Night_at_the_Museum                         </td>
+<td>https://www.rottentomatoes.com/m/night_at_the_museum/                     </td>
+</tr>
+<tr>
+<td>Cars (film)                                                               </td>
+<td>https://en.wikipedia.org/wiki/Cars_(film)                                 </td>
+<td>https://www.rottentomatoes.com/m/cars/                                    </td>
+</tr>
+</tbody>
+</table>
 </div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In [ ]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-r"><pre><span></span><span class="kp">head</span><span class="p">(</span>MovieTable<span class="p">)</span>
-</pre></div>
 
 </div>
+
 </div>
 </div>
 
@@ -433,7 +483,7 @@ MovieTable <span class="o">=</span> <span class="kp">subset</span><span class="p
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p> Now I can finally move on to extracting the movie information that I was after.</p>
+<p> Now I can finally move on to extracting the movie information I was after.</p>
 </div>
 </div>
 </div>
@@ -442,7 +492,7 @@ MovieTable <span class="o">=</span> <span class="kp">subset</span><span class="p
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="Extracting-Movie-Info">Extracting Movie Info<a class="anchor-link" href="#Extracting-Movie-Info">¶</a>
+<h3 id="Extracting-Movie-Info-From-Rotten-Tomatoes">Extracting Movie Info From Rotten Tomatoes<a class="anchor-link" href="#Extracting-Movie-Info-From-Rotten-Tomatoes">¶</a>
 </h3>
 </div>
 </div>
@@ -457,9 +507,18 @@ MovieTable <span class="o">=</span> <span class="kp">subset</span><span class="p
 </div>
 </div>
 </div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p> In order to extract movie information from Rotten Tomatoes, I first define the relevant columns in my data frame, so I have somewhere to put the information I am scraping. I decide that I will collect all of the information in the Tomatometer box and the movie information box, and create the corresponding columns in the code bellow. </p>
+</div>
+</div>
+</div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In [ ]:</div>
+<div class="prompt input_prompt">In [110]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-r"><pre><span></span>MovieTable<span class="o">$</span>AllCriticsScore <span class="o">=</span> <span class="kc">NA</span>
@@ -487,6 +546,15 @@ MovieTable<span class="o">$</span>RunTime <span class="o">=</span> <span class="
 </div>
 
 </div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p> I then write the following function, which extracts specific elements from a rotten tomatoes page and assigns it to the correct column in my data frame.</p>
+</div>
+</div>
+</div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 <div class="prompt input_prompt">In [ ]:</div>
@@ -498,23 +566,23 @@ MovieTable<span class="o">$</span>RunTime <span class="o">=</span> <span class="
         
         Page <span class="o">=</span> read_html<span class="p">(</span>MovieTable<span class="o">$</span>RottenTomatoesLink<span class="p">[</span>i<span class="p">])</span>
         
-        <span class="c1"># Extract Rotten Tomatoes Ratings</span>
+        <span class="c1"># Extract Tomatometer Ratings for critics</span>
         Tomatometer <span class="o">=</span> html_nodes<span class="p">(</span>Page<span class="p">,</span> xpath <span class="o">=</span> <span class="s">"//*[@id=\"tomato_meter_link\"]/span[2]/span"</span><span class="p">)</span> <span class="o">%&gt;%</span> 
             html_text<span class="p">()</span>
         MovieTable<span class="o">$</span>AllCriticsScore<span class="p">[</span>i<span class="p">]</span> <span class="o">=</span> Tomatometer<span class="p">[</span><span class="m">1</span><span class="p">]</span>
         MovieTable<span class="o">$</span>TopCriticsScore<span class="p">[</span>i<span class="p">]</span> <span class="o">=</span> Tomatometer<span class="p">[</span><span class="m">2</span><span class="p">]</span>
         
-        <span class="c1"># Extract Average Ratings</span>
+        <span class="c1"># Extract Average Ratings for critics</span>
         AverageRating <span class="o">=</span> html_nodes<span class="p">(</span>Page<span class="p">,</span> xpath <span class="o">=</span> <span class="s">"//*[(@id = \"scoreStats\")]//div[(((count(preceding-sibling::*) + 1) = 1) and parent::*)]"</span><span class="p">)</span> <span class="o">%&gt;%</span> 
             html_text<span class="p">()</span>
         AverageRating <span class="o">=</span> <span class="kp">gsub</span><span class="p">(</span><span class="s">"\n"</span><span class="p">,</span> <span class="s">""</span><span class="p">,</span> AverageRating<span class="p">)</span>
-        AverageRating <span class="o">=</span> <span class="kp">unlist</span><span class="p">(</span><span class="kp">strsplit</span><span class="p">(</span>AverageRating<span class="p">,</span> <span class="s">"/"</span><span class="p">))</span>
+        AverageRating <span class="o">=</span> <span class="kp">unlist</span><span class="p">(</span><span class="kp">strsplit</span><span class="p">(</span>AverageRating<span class="p">,</span> <span class="s">"/"</span><span class="p">))</span> <span class="c1">#turn element into vector</span>
         
-        MovieTable<span class="o">$</span>AllCriticsAverageRating<span class="p">[</span>i<span class="p">]</span> <span class="o">=</span> <span class="kp">gsub</span><span class="p">(</span><span class="s">"[^0-9\\.]"</span><span class="p">,</span> <span class="s">""</span><span class="p">,</span> AverageRating<span class="p">[</span><span class="m">1</span><span class="p">])</span>
+        MovieTable<span class="o">$</span>AllCriticsAverageRating<span class="p">[</span>i<span class="p">]</span> <span class="o">=</span> <span class="kp">gsub</span><span class="p">(</span><span class="s">"[^0-9\\.]"</span><span class="p">,</span> <span class="s">""</span><span class="p">,</span> AverageRating<span class="p">[</span><span class="m">1</span><span class="p">])</span> <span class="c1">#eliminate everything but numbers and periods</span>
         MovieTable<span class="o">$</span>TopCriticsAverageRating<span class="p">[</span>i<span class="p">]</span> <span class="o">=</span> <span class="kp">gsub</span><span class="p">(</span><span class="s">"[^0-9\\.]"</span><span class="p">,</span> <span class="s">""</span><span class="p">,</span> AverageRating<span class="p">[</span><span class="m">3</span><span class="p">])</span>
         
         
-        <span class="c1"># Extract reviews counted, number fresh, and number rotten</span>
+        <span class="c1"># Extract reviews counted, number fresh, and number rotten for critcs</span>
         CriticStats <span class="o">=</span> html_nodes<span class="p">(</span>Page<span class="p">,</span> xpath <span class="o">=</span> <span class="s">"//*[(@id = \"scoreStats\")]//span"</span><span class="p">)</span> <span class="o">%&gt;%</span> 
             html_text<span class="p">()</span>
         
@@ -527,35 +595,35 @@ MovieTable<span class="o">$</span>RunTime <span class="o">=</span> <span class="
         MovieTable<span class="o">$</span>AllCriticsRotten<span class="p">[</span>i<span class="p">]</span> <span class="o">=</span> CriticStats<span class="p">[</span><span class="m">7</span><span class="p">]</span>
         MovieTable<span class="o">$</span>TopCriticsRotten<span class="p">[</span>i<span class="p">]</span> <span class="o">=</span> CriticStats<span class="p">[</span><span class="m">14</span><span class="p">]</span>
         
-        <span class="c1"># Extract Audience Scores</span>
+        <span class="c1"># Extract Audience Tomatometer Scores</span>
         AudienceScore <span class="o">=</span> html_nodes<span class="p">(</span>Page<span class="p">,</span> xpath <span class="o">=</span> <span class="s">"//*[@id=\"scorePanel\"]/div[2]/div[1]/a/div/div[2]/div[1]/span"</span><span class="p">)</span> <span class="o">%&gt;%</span> 
             html_text<span class="p">()</span>
-        AudienceScore <span class="o">=</span> <span class="kp">as.numeric</span><span class="p">(</span><span class="kp">gsub</span><span class="p">(</span><span class="s">"%"</span><span class="p">,</span> <span class="s">""</span><span class="p">,</span> AudienceScore<span class="p">))</span>
+        AudienceScore <span class="o">=</span> <span class="kp">as.numeric</span><span class="p">(</span><span class="kp">gsub</span><span class="p">(</span><span class="s">"%"</span><span class="p">,</span> <span class="s">""</span><span class="p">,</span> AudienceScore<span class="p">))</span> <span class="c1">#remove special character</span>
         MovieTable<span class="o">$</span>AudienceScore<span class="p">[</span>i<span class="p">]</span> <span class="o">=</span> AudienceScore
         
-        <span class="c1"># </span>
+        <span class="c1">#Extract reviews counted and average review for Audiences </span>
         
         AudienceStats <span class="o">=</span> html_nodes<span class="p">(</span>Page<span class="p">,</span> xpath <span class="o">=</span> <span class="s">"//*[contains(concat( \" \", @class, \" \" ), concat( \" \", \"superPageFontColor\", \" \" ))]//div"</span><span class="p">)</span> <span class="o">%&gt;%</span> 
             html_text<span class="p">()</span>
         AudienceStats <span class="o">=</span> <span class="kp">gsub</span><span class="p">(</span><span class="s">"\n"</span><span class="p">,</span> <span class="s">""</span><span class="p">,</span> AudienceStats<span class="p">)</span>
         AudienceStats <span class="o">=</span> <span class="kp">gsub</span><span class="p">(</span><span class="s">"Average Rating:"</span><span class="p">,</span> <span class="s">""</span><span class="p">,</span> AudienceStats<span class="p">)</span>
         AudienceStats <span class="o">=</span> <span class="kp">gsub</span><span class="p">(</span><span class="s">"User Ratings:"</span><span class="p">,</span> <span class="s">""</span><span class="p">,</span> AudienceStats<span class="p">)</span>
-        AudienceStats <span class="o">=</span> trimws<span class="p">(</span>AudienceStats<span class="p">)</span>
+        AudienceStats <span class="o">=</span> trimws<span class="p">(</span>AudienceStats<span class="p">)</span> <span class="c1">#eliminate empty space</span>
         
         MovieTable<span class="o">$</span>AudienceAverageRating<span class="p">[</span>i<span class="p">]</span> <span class="o">=</span> AudienceStats<span class="p">[</span><span class="m">1</span><span class="p">]</span>
         MovieTable<span class="o">$</span>AudienceReviewsCounted<span class="p">[</span>i<span class="p">]</span> <span class="o">=</span> AudienceStats<span class="p">[</span><span class="m">2</span><span class="p">]</span>
         
-        <span class="c1"># </span>
+        <span class="c1"># Extract information from movie info box</span>
         MovieData <span class="o">=</span> html_nodes<span class="p">(</span>Page<span class="p">,</span> xpath <span class="o">=</span> <span class="s">"//*[@id=\"mainColumn\"]/section/div/div/ul/li/div[2]"</span><span class="p">)</span> <span class="o">%&gt;%</span> 
             html_text<span class="p">()</span>
-        MovieData <span class="o">=</span> trimws<span class="p">(</span><span class="kp">gsub</span><span class="p">(</span><span class="s">"\n"</span><span class="p">,</span> <span class="s">""</span><span class="p">,</span> MovieData<span class="p">))</span>
+        MovieData <span class="o">=</span> trimws<span class="p">(</span><span class="kp">gsub</span><span class="p">(</span><span class="s">"\n"</span><span class="p">,</span> <span class="s">""</span><span class="p">,</span> MovieData<span class="p">))</span> <span class="c1">#remove blank elements</span>
         
         MovieTable<span class="o">$</span>Rating<span class="p">[</span>i<span class="p">]</span> <span class="o">=</span> MovieData<span class="p">[</span><span class="m">1</span><span class="p">]</span>
-        MovieTable<span class="o">$</span>Genre<span class="p">[</span>i<span class="p">]</span> <span class="o">=</span> <span class="kp">gsub</span><span class="p">(</span><span class="s">", +"</span><span class="p">,</span> <span class="s">", "</span><span class="p">,</span> MovieData<span class="p">[</span><span class="m">2</span><span class="p">])</span>
+        MovieTable<span class="o">$</span>Genre<span class="p">[</span>i<span class="p">]</span> <span class="o">=</span> <span class="kp">gsub</span><span class="p">(</span><span class="s">", +"</span><span class="p">,</span> <span class="s">", "</span><span class="p">,</span> MovieData<span class="p">[</span><span class="m">2</span><span class="p">])</span> <span class="c1">#collapse spaces between words</span>
         MovieTable<span class="o">$</span>PremierDate<span class="p">[</span>i<span class="p">]</span> <span class="o">=</span> MovieData<span class="p">[</span><span class="m">5</span><span class="p">]</span>
         MovieTable<span class="o">$</span>BoxOffice<span class="p">[</span>i<span class="p">]</span> <span class="o">=</span> MovieData<span class="p">[</span><span class="m">7</span><span class="p">]</span>
         
-        <span class="c1"># </span>
+        <span class="c1"># extract movie runtime</span>
         RunTime <span class="o">=</span> html_nodes<span class="p">(</span>Page<span class="p">,</span> xpath <span class="o">=</span> <span class="s">"//*[@id=\"mainColumn\"]/section/div/div/ul/li/div[2]/time"</span><span class="p">)</span> <span class="o">%&gt;%</span> 
             html_text<span class="p">()</span> <span class="o">%&gt;%</span> trimws<span class="p">()</span>
         MovieTable<span class="o">$</span>RunTime<span class="p">[</span>i<span class="p">]</span> <span class="o">=</span> RunTime<span class="p">[</span><span class="m">3</span><span class="p">]</span>
@@ -574,7 +642,7 @@ MovieTable<span class="o">$</span>RunTime <span class="o">=</span> <span class="
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p><i>In case you are wondering, I am using assign because a function will keep objects inside of it defined to a local environment. So it is not actually manipulating MovieTable, but a copy of the data frame that only exists within the function. assign( ) tells R to make the local object "MovieTable" the global object "MovieFrame."</i></p>
+<p><i>In case you are wondering, I am using assign because a function will keep objects inside of it defined to a local environment. So it is not actually manipulating the dataframe "MovieTable," but a copy of the data frame that only exists within the function. "assign" tells R the local object "MovieTable" and the global object "MovieFrame" are the same object.</i></p>
 </div>
 </div>
 </div>
@@ -583,8 +651,8 @@ MovieTable<span class="o">$</span>RunTime <span class="o">=</span> <span class="
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>To make my function, I created new columns in my table corresponding to the information I wanted to extract from Rotten Tomatoes. Even though I think it would be interesting to do an exploration of the reviews written by critics and users, I think that would cause the project to become too complex. To keep the project in scope, I am going to resist that urge for now, and focus on more straightforward attributes.</p>
-<p>For each piece of information, I then found the xpath that most specifically defined it. Unfortunately, I could only get so far with xpaths, so I also had to use element numbers to further specify the information that I wanted. This caused a few problems because of the non-uniformity of some web pages. I will try to think of a better way to approach this problem, and edit this section if I do.</p>
+<p> The function above is fairly dense, but I think a broad overview will suffice at this point. For every element that I want to extract (e.g. movie runtime), I identify the xpath that best defines it for an arbitrary Rotten Tomatoes page. Oftentimes this will result in a list of multiple elements. I then use gsub to clean that list of unwanted characters as appropriate. Finally, I assign those elements to the correct column in my data frame.</p>
+<p> This approach works well enough with the following caveat: Not all Rotten Tomatoes pages are uniformly formatted (which I found incredibly odd). This meant that sometimes I would assign elements to the wrong column (e.g. put the runtime as the premier date). Furthermore, this would sometimes produce errors in my code. Trying to fix this led me to a wonderful discovery, R supports exception handling. I look forward to learning more about exception handling in the future, but for now, I will just use R catch to log my errors when they happen, and skip to the next i. </p>
 </div>
 </div>
 </div>
@@ -609,28 +677,6 @@ MovieTable<span class="o">$</span>RunTime <span class="o">=</span> <span class="
 <div class="prompt input_prompt">In [ ]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-r"><pre><span></span>MovieTable
-</pre></div>
-
-</div>
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p> Now I just rerun my for loop, with the specification that any i that produces an error will have that error logged, and the loop will move on to the next i. </p>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In [ ]:</div>
-<div class="inner_cell">
-    <div class="input_area">
 <div class=" highlight hl-r"><pre><span></span><span class="kp">load</span><span class="p">(</span><span class="s">'MovieTable.Rda'</span><span class="p">)</span>
 MovieTable
 </pre></div>
@@ -645,60 +691,8 @@ MovieTable
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p> A quick perusal of my results show that I am getting some errors in my table, particularly in the last few columns of my result. As I said before, this is because some pages do not have all categories populated, resulting in non uniform pages. Because I have defined my extraction in terms of position (e.g. the 4th div tag in a box), I am sometimes wrongly categorizing information. Furthermore, I am not extracting as much information as I could, because I haven't completed the exception handling step.</p>
-<p></p>
-<p> Still, the columns that I care about the most are correctly populated, and I believe I can fix the miscategorized rows in the data cleaning step. So I'm going to call it a day with the data harvesting, and start data exploration and data cleaning. </p>
-<p></p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
 <h2 id="Data-Cleaning-&amp;-Exploration">Data Cleaning &amp; Exploration<a class="anchor-link" href="#Data-Cleaning-&amp;-Exploration">¶</a>
 </h2>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="Preliminary-Questions">Preliminary Questions<a class="anchor-link" href="#Preliminary-Questions">¶</a>
-</h3>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p> I think most people find data cleaning and data exploration to be fairly intertwined processes. Cleaning the data will naturally force you to explore it, and exploring data will help you find data that needs to be clean. Because of this, I like to start thinking about preliminary questions before I clean my data. I find that it makes it more productive.</p>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<ul>
-<li>Are certain genres more prone to this than others?</li>
-<li>Does this corelate with critic rating? Is there more of a disconnect with highly rated movies or lowly rates movies</li>
-<li>Is this becoming more common with time? <ul>
-<li>(problems, not enough time looked at, and movies not rated evenly with time)</li>
-</ul>
-</li>
-<li>Is this a product of how many ratings the movie has? <ul>
-<li>Maybe the disconnect is the result of high group variance.</li>
-</ul>
-</li>
-</ul>
 </div>
 </div>
 </div>
@@ -730,7 +724,7 @@ MovieTable
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p> Movies that do not have a critics' score do not help me answer my questions, so I will remove them from my data frame. </p>
+<p> Right off the bat, I know that movies that do not have a critics' score will not help me answer any of my questions, so I can safely remove them from my data frame. </p>
 </div>
 </div>
 </div>
@@ -752,7 +746,7 @@ MovieTable
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p> I will subset any rows in my data that contain an NA. I am doing this because these are the rows most likely to be problematic, and I want to examine those rows to get a sense of what work needs to be done. </p>
+<p> I will also create a new data frame consisting of rows in my data that contain an NA. I am doing this because these are the rows most likely to be problematic, and perusing these rows willgive me a sense of what work needs to be done. </p>
 </div>
 </div>
 </div>
@@ -787,7 +781,7 @@ MovieTable
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p> The data transposition problem wasn't as bad as I thought, and seems to be limited to the last 3 columns of my data frame. Furthermore, it looks like each kind of data has a unique identifier that will allow me to sort it. For example, if an entry in the BoxOffice column doesn't contain a dollar sign, I know it's misplaced. So my plan is to go through a row and use this knowledge to identify misplaced entries. If an entry is misplaced, I will append it to an empty list. Then I will reassign entries in the list to the correct column based on identifiers. </p>
+<p> The misassignment of data wasn't as bad as I thought, and seems to be limited to the last 3 columns of my data frame. Furthermore, it looks like each kind of data has a unique identifier that will allow me to sort it. For example, if an entry in the BoxOffice column doesn't contain a dollar sign, I know it's misassigned. So my plan is to go through a row and use this knowledge to identify misplaced entries. If an entry is misplaced, I will append it to an empty list. Then I will reassign entries in the list to the correct column based on identifiers. </p>
 </div>
 </div>
 </div>
@@ -797,18 +791,21 @@ MovieTable
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-r"><pre><span></span><span class="kr">for</span> <span class="p">(</span>i <span class="kr">in</span> <span class="kp">seq</span><span class="p">(</span><span class="kp">nrow</span><span class="p">(</span>MovieTable<span class="p">)))</span> <span class="p">{</span>
-    PlaceHolder <span class="o">=</span> <span class="kt">vector</span><span class="p">()</span>
+    PlaceHolder <span class="o">=</span> <span class="kt">vector</span><span class="p">()</span> <span class="c1">#create empty list to hold misassigned elements</span>
+    <span class="c1">#retrieve and clear misplaced data in the PremierDate column</span>
     pattern <span class="o">=</span> <span class="s">"wide|limited"</span>
     <span class="kr">if</span> <span class="p">(</span><span class="kp">grepl</span><span class="p">(</span>pattern<span class="p">,</span> MovieTable<span class="o">$</span>PremierDate<span class="p">[</span>i<span class="p">])</span> <span class="o">==</span> <span class="kc">FALSE</span> <span class="o">&amp;&amp;</span> 
         <span class="kp">is.na</span><span class="p">(</span>MovieTable<span class="o">$</span>PremierDate<span class="p">[</span>i<span class="p">])</span> <span class="o">==</span> <span class="kc">FALSE</span><span class="p">)</span> <span class="p">{</span>
         PlaceHolder <span class="o">=</span> <span class="kp">append</span><span class="p">(</span>PlaceHolder<span class="p">,</span> MovieTable<span class="o">$</span>PremierDate<span class="p">[</span>i<span class="p">])</span>
         MovieTable<span class="o">$</span>PremierDate<span class="p">[</span>i<span class="p">]</span> <span class="o">=</span> <span class="kc">NA_character_</span>
     <span class="p">}</span>
+    <span class="c1">#retrieve and clear misplaced data in the BoxOffice column</span>
     <span class="kr">if</span> <span class="p">(</span><span class="kp">grepl</span><span class="p">(</span><span class="s">"\\$"</span><span class="p">,</span> MovieTable<span class="o">$</span>BoxOffice<span class="p">[</span>i<span class="p">])</span> <span class="o">==</span> <span class="kc">FALSE</span> <span class="o">&amp;&amp;</span> 
         <span class="kp">is.na</span><span class="p">(</span>MovieTable<span class="o">$</span>BoxOffice<span class="p">[</span>i<span class="p">])</span> <span class="o">==</span> <span class="kc">FALSE</span><span class="p">)</span> <span class="p">{</span>
         PlaceHolder <span class="o">=</span> <span class="kp">append</span><span class="p">(</span>PlaceHolder<span class="p">,</span> MovieTable<span class="o">$</span>BoxOffice<span class="p">[</span>i<span class="p">])</span>
         MovieTable<span class="o">$</span>BoxOffice<span class="p">[</span>i<span class="p">]</span> <span class="o">=</span> <span class="kc">NA_character_</span>
     <span class="p">}</span>
+    <span class="c1">#Assign elements in the Placeholder list to the correct column in the dataframe</span>
     PlaceHolder <span class="o">=</span> <span class="kp">unique</span><span class="p">(</span>PlaceHolder<span class="p">)</span>
     <span class="kr">if</span> <span class="p">(</span><span class="kp">length</span><span class="p">(</span>PlaceHolder<span class="p">)</span> <span class="o">==</span> <span class="m">0</span><span class="p">)</span> <span class="p">{</span>
         <span class="kr">next</span>
@@ -835,7 +832,7 @@ MovieTable
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p> All the code bellow does is remove special characters from numeric data so that I can cast it into the correct data type. I also make sure that audience and critic reviews are both scored out of 10.</p>
+<p> I should also remove special characters from my dataframe, so I can cast my collumns into the correct data type, and make it so that critic and audience scores are both rated out of 10.</p>
 </div>
 </div>
 </div>
@@ -877,7 +874,7 @@ MovieTable<span class="o">$</span>TopCriticsReviewsCounted <span class="o">=</sp
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>Finally, I do one-hot encoding on the genre column, to make it easier to work with.</p>
+<p>Finally, I do one-hot encoding on the genre column, to make the data easier to work with.</p>
 </div>
 </div>
 </div>
@@ -909,6 +906,45 @@ MovieTable<span class="p">[,</span> <span class="p">(</span><span class="kp">nam
 </div>
 </div>
 
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Preliminary-Questions">Preliminary Questions<a class="anchor-link" href="#Preliminary-Questions">¶</a>
+</h3>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p> Now that I know what date is available to me, I can begin thinking about what questions I can start exploring, beyond the original problem statement.</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<ul>
+<li>Are certain genres more prone to this than others?</li>
+<li>Does this corelate with critic rating? Is there more of a disconnect with highly rated movies or lowly rates movies</li>
+<li>Is this becoming more common with time? <ul>
+<li>(problems, not enough time looked at, and movies not rated evenly with time)</li>
+</ul>
+</li>
+<li>Is this a product of how many ratings the movie has? <ul>
+<li>Maybe the disconnect is the result of high group variance.</li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
 </div>
 <div class="cell border-box-sizing text_cell rendered">
 <div class="prompt input_prompt">
