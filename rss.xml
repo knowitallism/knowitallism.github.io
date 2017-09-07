@@ -1,19 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<?xml-stylesheet type="text/xsl" href="assets/xml/rss.xsl" media="all"?><rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Joshua Hernandez's Blog</title><link>http://joshuahernandezblog.com/</link><description>This is a demo site for Nikola.</description><atom:link href="http://joshuahernandezblog.com/rss.xml" rel="self" type="application/rss+xml"></atom:link><language>en</language><copyright>Contents © 2017 &lt;a href="mailto:Joshua.M.S.Hernandez@gmail.com"&gt;Joshua Hernandez&lt;/a&gt; </copyright><lastBuildDate>Sun, 27 Aug 2017 18:17:12 GMT</lastBuildDate><generator>Nikola (getnikola.com)</generator><docs>http://blogs.law.harvard.edu/tech/rss</docs><item><title>Less is More: On the Importance of Feature Reduction</title><link>http://joshuahernandezblog.com/blog/less-is-more-on-the-importance-of-feature-reduction/</link><dc:creator>Joshua Hernandez</dc:creator><description>&lt;div tabindex="-1" id="notebook" class="border-box-sizing"&gt;
+<?xml-stylesheet type="text/xsl" href="assets/xml/rss.xsl" media="all"?><rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Joshua Hernandez's Blog</title><link>http://joshuahernandezblog.com/</link><description>This is a demo site for Nikola.</description><atom:link href="http://joshuahernandezblog.com/rss.xml" rel="self" type="application/rss+xml"></atom:link><language>en</language><copyright>Contents © 2017 &lt;a href="mailto:Joshua.M.S.Hernandez@gmail.com"&gt;Joshua Hernandez&lt;/a&gt; </copyright><lastBuildDate>Thu, 07 Sep 2017 11:21:58 GMT</lastBuildDate><generator>Nikola (getnikola.com)</generator><docs>http://blogs.law.harvard.edu/tech/rss</docs><item><title>You've Got Mail: Building a Spam Filter with R</title><link>http://joshuahernandezblog.com/blog/youve-got-mail-building-a-spam-filter-with-r/</link><dc:creator>Joshua Hernandez</dc:creator><description>&lt;div tabindex="-1" id="notebook" class="border-box-sizing"&gt;
     &lt;div class="container" id="notebook-container"&gt;
 
 &lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
 &lt;/div&gt;
 &lt;div class="inner_cell"&gt;
 &lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
-&lt;p&gt;Write your post here.&lt;/p&gt;
-
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-    &lt;/div&gt;
-  &lt;/div&gt;
-</description><guid>http://joshuahernandezblog.com/blog/less-is-more-on-the-importance-of-feature-reduction/</guid><pubDate>Thu, 24 Aug 2017 12:46:37 GMT</pubDate></item><item><title>Into the Woods: Visualizing Random Forests with R</title><link>http://joshuahernandezblog.com/blog/into-the-woods-visualizing-random-forests-with-r/</link><dc:creator>Joshua Hernandez</dc:creator><description>&lt;div tabindex="-1" id="notebook" class="border-box-sizing"&gt;
+&lt;p&gt;&lt;i&gt;We take an unorthodox approach to building a spam filter in R, using k-means clustering to filter out spam. The first half will go over the theory behind spam filters and clustering algorithms. The second half will go over what I did to build a spam filter with R. &lt;/i&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href="http://joshuahernandezblog.com/blog/youve-got-mail-building-a-spam-filter-with-r/"&gt;Read more…&lt;/a&gt; (12 min remaining to read)&lt;/p&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;</description><guid>http://joshuahernandezblog.com/blog/youve-got-mail-building-a-spam-filter-with-r/</guid><pubDate>Fri, 25 Aug 2017 23:26:37 GMT</pubDate></item><item><title>Into the Woods: Visualizing Random Forests with R</title><link>http://joshuahernandezblog.com/blog/into-the-woods-visualizing-random-forests-with-r/</link><dc:creator>Joshua Hernandez</dc:creator><description>&lt;div tabindex="-1" id="notebook" class="border-box-sizing"&gt;
     &lt;div class="container" id="notebook-container"&gt;
 
 &lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
