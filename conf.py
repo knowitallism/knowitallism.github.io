@@ -1256,12 +1256,12 @@ ANALYTICS = """
             <script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
             </script>
             <script type="text/javascript">
-            _uacct = "UA-1639287-1";
+            _uacct = "UA-107266843-1";
             urchinTracker();
             </script>
         <!-- End of Google Analytics -->
     """
-    
+
 # (translatable)
 # BODY_END = ""
 
