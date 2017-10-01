@@ -7,62 +7,70 @@
                         http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
  <url>
   <loc>http://joshuahernandezblog.com/</loc>
-  <lastmod>2017-09-07T11:21:00Z</lastmod>
+  <lastmod>2017-10-01T00:09:00Z</lastmod>
  </url>
  <url>
   <loc>http://joshuahernandezblog.com/2017/</loc>
-  <lastmod>2017-09-07T11:21:00Z</lastmod>
+  <lastmod>2017-10-01T00:09:00Z</lastmod>
  </url>
  <url>
   <loc>http://joshuahernandezblog.com/about-me/</loc>
-  <lastmod>2017-09-07T11:21:00Z</lastmod>
+  <lastmod>2017-10-01T00:09:00Z</lastmod>
  </url>
  <url>
   <loc>http://joshuahernandezblog.com/archive.html</loc>
-  <lastmod>2017-09-07T11:21:00Z</lastmod>
+  <lastmod>2017-10-01T00:09:00Z</lastmod>
  </url>
  <url>
   <loc>http://joshuahernandezblog.com/blog/MovieProject/web-scraping-with-r/</loc>
-  <lastmod>2017-09-07T11:22:00Z</lastmod>
+  <lastmod>2017-10-01T00:09:00Z</lastmod>
+ </url>
+ <url>
+  <loc>http://joshuahernandezblog.com/blog/a-perfectly-cromulent-intro-to-simpsons-paradox/</loc>
+  <lastmod>2017-10-01T00:09:00Z</lastmod>
  </url>
  <url>
   <loc>http://joshuahernandezblog.com/blog/into-the-woods-visualizing-random-forests-with-r/</loc>
-  <lastmod>2017-09-07T11:21:00Z</lastmod>
+  <lastmod>2017-10-01T00:09:00Z</lastmod>
  </url>
  <url>
   <loc>http://joshuahernandezblog.com/blog/youve-got-mail-building-a-spam-filter-with-r/</loc>
-  <lastmod>2017-09-07T11:21:00Z</lastmod>
+  <lastmod>2017-10-01T00:09:00Z</lastmod>
  </url>
  <url>
   <loc>http://joshuahernandezblog.com/categories/</loc>
-  <lastmod>2017-09-07T11:22:00Z</lastmod>
+  <lastmod>2017-10-01T00:09:00Z</lastmod>
  </url>
  <url>
   <loc>http://joshuahernandezblog.com/categories/data-extraction/</loc>
-  <lastmod>2017-09-07T11:21:00Z</lastmod>
+  <lastmod>2017-10-01T00:09:00Z</lastmod>
  </url>
  <url>
   <loc>http://joshuahernandezblog.com/categories/machine-learning/</loc>
-  <lastmod>2017-09-07T11:21:00Z</lastmod>
+  <lastmod>2017-10-01T00:09:00Z</lastmod>
  </url>
  <url>
   <loc>http://joshuahernandezblog.com/categories/quick-post/</loc>
-  <lastmod>2017-09-07T11:21:00Z</lastmod>
+  <lastmod>2017-10-01T00:09:00Z</lastmod>
  </url>
  <url>
   <loc>http://joshuahernandezblog.com/categories/r/</loc>
-  <lastmod>2017-09-07T11:21:00Z</lastmod>
+  <lastmod>2017-10-01T00:09:00Z</lastmod>
  </url>
  <url>
   <loc>http://joshuahernandezblog.com/categories/random-forest/</loc>
-  <lastmod>2017-09-07T11:21:00Z</lastmod>
+  <lastmod>2017-10-01T00:09:00Z</lastmod>
  </url>
  <url>
   <loc>http://joshuahernandezblog.com/categories/rvest/</loc>
-  <lastmod>2017-09-07T11:21:00Z</lastmod>
+  <lastmod>2017-10-01T00:09:00Z</lastmod>
+ </url>
+ <url>
+  <loc>http://joshuahernandezblog.com/categories/statistics/</loc>
+  <lastmod>2017-10-01T00:09:00Z</lastmod>
  </url>
  <url>
   <loc>http://joshuahernandezblog.com/categories/web-scraping/</loc>
-  <lastmod>2017-09-07T11:21:00Z</lastmod>
+  <lastmod>2017-10-01T00:09:00Z</lastmod>
  </url>
 </urlset>
