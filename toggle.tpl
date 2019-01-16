@@ -1,23 +1,20 @@
-{%- extends 'full.tpl' -%}
 
-{% block input_group -%}
-{%- if cell.metadata.hide_input or nb.metadata.hide_input -%}
-{%- else -%}
-{{ super() }}
-{%- endif -%}
-{% endblock input_group %}
+{%- extends 'basic.tpl' -%}
 
-{% block output_group -%}
-{%- if cell.metadata.hide_output -%}
-{%- else -%}
+{% block output_group %}
+<div class="output_wrapper output_hidden">
+  <div class="output">
     {{ super() }}
-{%- endif -%}
+  </div>
+</div>
 {% endblock output_group %}
 
-{% block output_area_prompt %}
-{%- if cell.metadata.hide_input or nb.metadata.hide_input -%}
-    <div class="prompt"> </div>
-{%- else -%}
-    {{ super() }}
-{%- endif -%}
-{% endblock output_area_prompt %}
+{% block input %}
+<div class="inner_cell">
+  <div class="input_area">
+    {{ cell.source | highlight_code(metadata=cell.metadata) }}
+    <i class="icon-hand-up icon-large" style="float:right; margin-bottom:8px; margin-right:10px">
+    &nbsp;&nbsp;Click me to hide the output</i>
+  </div>
+</div>
+{%- endblock input %}
